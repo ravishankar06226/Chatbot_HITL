@@ -9,13 +9,21 @@ from langchain_core.tools import tool
 from langgraph.types import interrupt, Command
 from dotenv import load_dotenv
 import requests
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+
 
 load_dotenv()
 
+model = HuggingFaceEndpoint(
+    repo_id="openai/gpt-oss-120b",
+    task="text-generation"
+)
+
+llm = ChatHuggingFace(llm=model)
 # -------------------
 # 1. LLM
 # -------------------
-llm = ChatOpenAI()
+#llm = ChatOpenAI()
 
 # -------------------
 # 2. Tools
