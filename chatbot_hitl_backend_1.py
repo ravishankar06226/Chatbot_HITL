@@ -85,7 +85,7 @@ class ChatState(TypedDict):
 # -------------------
 def chat_node(state: ChatState):
     """LLM node that may answer or request a tool call."""
-    messages = state["messages"]
+    messages = [SystemMessage(content="You are a helpful assistant. answer only if you have precise knowledge. don't hellucinate.")] + state["messages"]
     response = llm_with_tools.invoke(messages)
     return {"messages": [response]}
 
