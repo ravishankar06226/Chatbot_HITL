@@ -9,7 +9,7 @@ if "thread_id" not in st.session_state:
     st.session_state.thread_id = str(uuid.uuid4())
 
 if "messages" not in st.session_state:
-    st.session_state.messages = [SystemMessage(content="You are a helpful assistant. answer only if you have precise knowledge. don't hellucinate.")]
+    st.session_state.messages = []
 
 if "waiting_for_hitl" not in st.session_state:
     st.session_state.waiting_for_hitl = False
