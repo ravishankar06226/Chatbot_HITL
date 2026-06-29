@@ -3,3 +3,5 @@ streamlit
 langgraph
 dotenv
 langchain_huggingface
+biopython
+
