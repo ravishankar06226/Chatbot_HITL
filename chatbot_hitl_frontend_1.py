@@ -31,6 +31,7 @@ with st.sidebar:
             data=file,
             file_name="downloaded_image.png",
             mime="image/png")
+            st.session_state.file=''
 
 # Display chat history
 for msg in st.session_state.messages:
