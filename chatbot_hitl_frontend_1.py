@@ -72,6 +72,7 @@ if not st.session_state.waiting_for_hitl:
                 }
             },
         )
+        st.session_state.file=''
 
         interrupts = result.get("__interrupt__", [])
 
