@@ -1,24 +1,27 @@
+import os
 from langgraph.graph import StateGraph, START
 from typing import TypedDict, Annotated
-from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
+from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_core.tools import tool
+from langgraph.prebuilt import InjectedState
 from langgraph.types import interrupt, Command
 from dotenv import load_dotenv
 import requests
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+import sys
+import pandas as pd
+import matplotlib.pyplot as plt
 
 
 load_dotenv()
 
-model = HuggingFaceEndpoint(
-    repo_id="openai/gpt-oss-120b",
-    task="text-generation"
-)
-
+#model = HuggingFaceEndpoint(repo_id="openai/gpt-oss-120b",task="text-generation")
+model = HuggingFaceEndpoint(repo_id="Qwen/Qwen2.5-7B-Instruct",task="text-generation",max_new_tokens=512,do_sample=False,)
 llm = ChatHuggingFace(llm=model)
 # -------------------
 # 1. LLM
@@ -70,8 +73,25 @@ def purchase_stock(symbol: str, quantity: int) -> dict:
             "quantity": quantity,
         }
 
+@tool
+def scatter_plot(state: Annotated[dict, InjectedState])->str:
+    """plot or generate a scatter plot with the given file passed through state"""
+    file_path = state.get("file")
+    if file_path!='':
+        try:
+            df = pd.read_csv(file_path)
+            plt.scatter(df['col1'],df['col2'])
+            plt.title(f"scatter plot")
+            plt.savefig(file_path+".png", dpi=300)
+            os.remove(file_path)
+            return {"message":"your plot is ready please download using download button"}
+        except ValueError:
+            return {"message":"given data is not in correct format"}
 
-tools = [get_stock_price, purchase_stock]
+    else:
+        return {"message":"probably you forgot to attach file"}
+
+tools = [get_stock_price, purchase_stock, scatter_plot]
 llm_with_tools = llm.bind_tools(tools)
 
 # -------------------
@@ -79,13 +99,14 @@ llm_with_tools = llm.bind_tools(tools)
 # -------------------
 class ChatState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
+    file:str
 
 # -------------------
 # 4. Nodes
 # -------------------
 def chat_node(state: ChatState):
     """LLM node that may answer or request a tool call."""
-    messages = [SystemMessage(content="You are a helpful assistant. answer only if you have precise knowledge. don't hellucinate.")] + state["messages"]
+    messages = state["messages"]
     response = llm_with_tools.invoke(messages)
     return {"messages": [response]}
 
