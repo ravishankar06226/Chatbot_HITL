@@ -26,6 +26,7 @@ st.title("LangGraph Chatbot")
 with st.sidebar:
     uploaded_file = st.file_uploader("Choose a file", type=["txt", "csv", "xlsx", "xls", "tsv"])
     if os.path.isfile(st.session_state.file+".png"):
+        uploaded_file=None
         with open(st.session_state.file+".png", "rb") as file:
             st.download_button(label="Download PNG Image",
             data=file,
