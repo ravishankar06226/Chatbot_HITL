@@ -6,10 +6,6 @@ import uuid
 import os
 import tempfile
 
-def handle_upload():
-    # Make sure to handle the state inside the callback if needed
-    st.rerun()
-
 # Initialize session state
 if "thread_id" not in st.session_state:
     st.session_state.thread_id = str(uuid.uuid4())
@@ -29,7 +25,7 @@ st.title("LangGraph Chatbot")
 
 
 with st.sidebar:
-    uploaded_file = st.file_uploader("Choose a file", type=["txt", "csv", "xlsx", "xls", "tsv"],on_change=handle_upload)
+    uploaded_file = st.file_uploader("Choose a file", type=["txt", "csv", "xlsx", "xls", "tsv"])
     if uploaded_file is not None:
         if os.path.isfile(st.session_state.file+".png"):
             with open(st.session_state.file+".png", "rb") as file:
