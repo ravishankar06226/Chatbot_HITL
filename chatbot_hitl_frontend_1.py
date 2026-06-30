@@ -6,6 +6,10 @@ import uuid
 import os
 import tempfile
 
+def handle_upload():
+    # Make sure to handle the state inside the callback if needed
+    st.rerun()
+
 # Initialize session state
 if "thread_id" not in st.session_state:
     st.session_state.thread_id = str(uuid.uuid4())
