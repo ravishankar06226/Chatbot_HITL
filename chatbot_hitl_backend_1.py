@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 load_dotenv()
 
 #model = HuggingFaceEndpoint(repo_id="openai/gpt-oss-120b",task="text-generation")
-model = HuggingFaceEndpoint(repo_id="Qwen/Qwen2.5-7B-Instruct",task="text-generation",max_new_tokens=512,do_sample=False,)
+model = HuggingFaceEndpoint(repo_id="Qwen/Qwen2.5-7B-Instruct",task="text-generation",max_new_tokens=50,do_sample=False,)
 llm = ChatHuggingFace(llm=model)
 # -------------------
 # 1. LLM
@@ -74,7 +74,7 @@ def purchase_stock(symbol: str, quantity: int) -> dict:
 
 @tool
 def scatter_plot(state: Annotated[dict, InjectedState])->str:
-    """plot or generate a scatter plot with the given file passed through state"""
+    """plot or generate a scatter plot"""
     file_path = state.get("file")
     if file_path!='':
         try:
