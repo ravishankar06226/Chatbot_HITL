@@ -47,7 +47,7 @@ if uploaded_file is not None:
             #print(temp_path)
             st.session_state.file=temp_path
 if uploaded_file is None:
-    st.session_state.file=="":
+    st.session_state.file==""
 
 print(st.session_state.file)
 # Normal chat input
