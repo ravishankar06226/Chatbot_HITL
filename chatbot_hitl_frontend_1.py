@@ -40,11 +40,12 @@ for msg in st.session_state.messages:
 
     # Create a temporary file that persists long enough to run the command
 if uploaded_file is not None:
-    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[-1]) as temp_file:
-        temp_file.write(uploaded_file.getvalue())
-        temp_path = temp_file.name  # This is the physical path string
-        #print(temp_path)
-        st.session_state.file=temp_path
+    if st.session_state.file=="":
+        with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[-1]) as temp_file:
+            temp_file.write(uploaded_file.getvalue())
+            temp_path = temp_file.name  # This is the physical path string
+            #print(temp_path)
+            st.session_state.file=temp_path
 
 print(st.session_state.file)
 # Normal chat input
