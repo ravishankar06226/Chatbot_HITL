@@ -19,35 +19,35 @@ if "waiting_for_hitl" not in st.session_state:
 if "hitl_prompt" not in st.session_state:
     st.session_state.hitl_prompt = None
 if "file" not in st.session_state:
-    st.session_state.file=''
+    st.session_state.file=""
 
 st.title("LangGraph Chatbot")
+if uploaded_file is None:
+    st.session_state.file=""
 
 with st.sidebar:
-    uploaded_file = st.file_uploader("Choose a file", type=["txt", "csv", "xlsx", "xls", "tsv"])
-    if os.path.isfile(st.session_state.file+".png"):
-        uploaded_file=None
-        with open(st.session_state.file+".png", "rb") as file:
-            st.download_button(label="Download PNG Image",
-            data=file,
-            file_name="downloaded_image.png",
-            mime="image/png")
-        st.session_state.file=''
-        uploaded_file=None
+    uploaded_file = st.file_uploader("Choose a file", type=["txt", "csv", "xlsx", "xls", "tsv"],on_change=handle_upload)
+    if uploaded_file is not None:
+        if os.path.isfile(st.session_state.file+".png"):
+            with open(st.session_state.file+".png", "rb") as file:
+                st.download_button(label="Download PNG Image",
+                data=file,
+                file_name="downloaded_image.png",
+                mime="image/png")
 
 # Display chat history
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.write(msg["content"])
 
-if st.session_state.file == '':
-    if uploaded_file is not None:
-        # Create a temporary file that persists long enough to run the command
-        with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[-1]) as temp_file:
-            temp_file.write(uploaded_file.getvalue())
-            temp_path = temp_file.name  # This is the physical path string
-            #print(temp_path)
-            st.session_state.file=temp_path
+if uploaded_file is not None:
+    # Create a temporary file that persists long enough to run the command
+    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[-1]) as temp_file:
+        temp_file.write(uploaded_file.getvalue())
+        temp_path = temp_file.name  # This is the physical path string
+        #print(temp_path)
+        st.session_state.file=temp_path
+
 print(st.session_state.file)
 # Normal chat input
 if not st.session_state.waiting_for_hitl:
