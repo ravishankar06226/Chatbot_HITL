@@ -57,7 +57,7 @@ if not st.session_state.waiting_for_hitl:
         )
 
         with st.chat_message("user"):
-            st.write(user_input)
+            st.write(user_input+st.session_state.file)
 
         state = {
             "messages": [HumanMessage(content=user_input)],
