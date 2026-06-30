@@ -92,7 +92,7 @@ if not st.session_state.waiting_for_hitl:
 
             with st.chat_message("assistant"):
                 st.write(bot_response)
-            #st.rerun()
+            st.rerun()
 
 
 
