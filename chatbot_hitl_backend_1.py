@@ -105,7 +105,7 @@ class ChatState(TypedDict):
 # -------------------
 def chat_node(state: ChatState):
     """LLM node that may answer or request a tool call."""
-    system_message="You are a strict conversational assistant. You are ONLY allowed to answer questions using the information provided by the tools available to you.Do not use your own pre-trained knowledge to answer questions. If the information cannot be found using your tools, or if you do not have a tool for the question, respond with exactly: "I am sorry, but I can only answer questions using my configured tools."
+    system_message="""You are a strict conversational assistant. You are ONLY allowed to answer questions using the information provided by the tools available to you.Do not use your own pre-trained knowledge to answer questions. If the information cannot be found using your tools, or if you do not have a tool for the question, respond with exactly: "I am sorry, but I can only answer questions using my configured tools."""
     messages = [SystemMessage(content=system_message)]+state["messages"]
     response = llm_with_tools.invoke(messages)
     return {"messages": [response]}
