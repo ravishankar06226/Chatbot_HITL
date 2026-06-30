@@ -22,8 +22,7 @@ if "file" not in st.session_state:
     st.session_state.file=""
 
 st.title("LangGraph Chatbot")
-if uploaded_file is None:
-    st.session_state.file=""
+
 
 with st.sidebar:
     uploaded_file = st.file_uploader("Choose a file", type=["txt", "csv", "xlsx", "xls", "tsv"],on_change=handle_upload)
@@ -34,6 +33,8 @@ with st.sidebar:
                 data=file,
                 file_name="downloaded_image.png",
                 mime="image/png")
+    if uploaded_file is None:
+        st.session_state.file=""
 
 # Display chat history
 for msg in st.session_state.messages:
