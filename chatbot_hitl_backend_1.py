@@ -165,7 +165,7 @@ def stacked_bar_plot(state: Annotated[dict,InjectedState])->str:
             df['Adapter(%)']= (df['Total Read']-df['Read After Adapter Trimming'])*100/df['Total Read']
             df['Contamination(%)']=(df['Read After Adapter Trimming']-df['Read After Contamination Removal'])*100/df['Total Read']
             df['% Read alignment'] =df['Read aligned']*100/df['Total Read']
-            df['Umapped(%)']= 100 - (df['Adapter(%)']+df['Contamination(%)']+df['% Read alignment'])
+            df['Unmapped(%)']= 100 - (df['Adapter(%)']+df['Contamination(%)']+df['% Read alignment'])
             df=df[['Adapter(%)','Contamination(%)','% Read alignment','Unmapped(%)']]
             ax=df.plot(kind='bar', stacked=True)
             plt.ylabel('Percentage of reads')
