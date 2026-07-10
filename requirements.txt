@@ -9,7 +9,6 @@ openpyxl
 httplib2
 seaborn
 pydeseq2
-shutil
 gseapy
 
 
