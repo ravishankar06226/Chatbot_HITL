@@ -5,4 +5,11 @@ dotenv
 langchain_huggingface
 biopython
 matplotlib
+openpyxl
+httplib2
+seaborn
+pydeseq2
+shutil
+gseapy
+
 
