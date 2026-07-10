@@ -248,7 +248,7 @@ def DGE(state:Annotated[dict,InjectedState],comparison_name:str)->str:
                 df_final=np.log2(df_final + 1)
                 color_for_group = lambda x: "#3498db" if x==metadata['Group'][0] else "#e74c3c"
                 metadata['Group']=metadata['Group'].apply(color_for_group)
-                condition_colors = metadata[["Group"]]
+                condition_colors = metadata[['Group']]
 
                 g = sns.clustermap(
                 df_final,
