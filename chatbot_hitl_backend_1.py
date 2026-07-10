@@ -246,7 +246,7 @@ def DGE(state:Annotated[dict,InjectedState],comparison_name:str)->str:
                 df_final.set_index('Gene_Name', inplace=True)
                 df_final=df_final[list(metadata.index)]
                 df_final=np.log2(df_final + 1)
-                color_for_group = lambda x: "#3498db" if x==metadata["Group"][0] else "#e74c3c"
+                color_for_group = lambda x: "#3498db" if x==str(list(metadata["Group"])[0]) else "#e74c3c"
                 metadata["Group"]=metadata["Group"].apply(color_for_group)
                 condition_colors = metadata[["Group"]]
 
