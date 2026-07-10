@@ -201,7 +201,7 @@ def DGE(state:Annotated[dict,InjectedState],comparison_name:str)->str:
     files_path=state.get("files")
     comparison=comparison_name
     if files_path!=[]:
-        try:
+        #try:
             df1=pd.read_excel(files_path[0],index_col=0)
             df2=pd.read_excel(files_path[1],index_col=0)
             df3=pd.read_excel(files_path[2],index_col=0)
@@ -268,8 +268,8 @@ def DGE(state:Annotated[dict,InjectedState],comparison_name:str)->str:
                 g.cax.set_title('log2Normlised_Counts', fontsize=10) # Label the colorbar
                 plt.savefig(files_path[0]+'_plot.png', dpi=300, bbox_inches='tight')
                 return {"message":"your DGE or Differential gene expression and heatmap file is ready; please download. Note: this DGE is strictly based on pvalue<0.05 and log2FC +/-1"}
-        except:
-            return {"message":"given data is not in correct format; Please download the template using download button"}
+        #except:
+         #   return {"message":"given data is not in correct format; Please download the template using download button"}
     else:
         return {"message":"probably you forgot to attach file"}
 
