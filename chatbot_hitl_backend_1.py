@@ -304,6 +304,7 @@ def pathway_analysis(state:Annotated[dict,InjectedState]):
                 shutil.make_archive(files_path[0]+"_Enrichment","zip", files_path[0].split(".")[0])
                 return {"message":"your DGE pathway analysis is ready, please downoad using download button"}
             except:
+                shutil.copy(os.path.abspath("test_data/ForPathwayAnalysis.xlsx"),files_path[0]+"_Template.xlsx")
                 return {"message":"given data is not in correct format; Please download the template using download button"}
         else:
             return {"message":"probably you forgot to attach file"}
@@ -329,6 +330,7 @@ def pathway_analysis(state:Annotated[dict,InjectedState]):
                 shutil.make_archive(files_path[0]+"_Enrichment","zip", files_path[0].split(".")[0])
                 return {"message":"your DGE pathway analysis is ready, please downoad using download button"}
             except:
+                shutil.copy(os.path.abspath("test_data/ForPathwayAnalysis.xlsx"),files_path[0]+"_Template.xlsx")
                 return {"message":"given data is not in correct format; Please download the template using download button"}
         else:
             return {"message":"probably you forgot to attach file"}
