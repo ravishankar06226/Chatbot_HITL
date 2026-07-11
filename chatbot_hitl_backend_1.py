@@ -150,6 +150,7 @@ def reverse_compliment(state: Annotated[dict, InjectedState])->str:
             df.to_excel(files_path[0]+"_Rev.xlsx",index=None)
             return {"message":"your reverse compliment file is ready; please download"}
         except:
+            shutil.copy("static/Reverse.xlsx",files_path[0]+"_Template.xlsx")
             return {"message":"given data is not in correct format; Please download the template using download button"}
     else:
         return {"message":"probably you forgot to attach file"}
@@ -174,6 +175,7 @@ def stacked_bar_plot(state: Annotated[dict,InjectedState])->str:
             plt.savefig(files_path[0]+"_stack.png", dpi=300, bbox_inches='tight')
             return {"message":"your stacked bar plot or alignment summary plot is ready. Please download using download button"}
         except:
+            shutil.copy("static/ALIGNMENT.xlsx",files_path[0]+"_Template.xlsx")
             return {"message":"given data is not in correct format; Please download the template using download button"}
     else:
         return {"message":"Probably you forgot to attach the file"}
@@ -189,6 +191,7 @@ def hgnc_symbol(state: Annotated[dict,InjectedState])->str:
             df.to_excel(files_path[0]+"_hgnc.xlsx",index=None)
             return {"message":"your HGNC symbol file is ready; please download"}
         except:
+            shutil.copy("static/HGNC.xlsx",files_path[0]+"_Template.xlsx")
             return {"message":"given data is not in correct format; Please download the template using download button"}
     else:
         return {"message":"probably you forgot to attach file"}
@@ -201,7 +204,7 @@ def DGE(state:Annotated[dict,InjectedState],comparison_name:str)->str:
     files_path=state.get("files")
     comparison=comparison_name
     if files_path!=[]:
-        #try:
+        try:
             df1=pd.read_excel(files_path[0],index_col=0)
             df2=pd.read_excel(files_path[1],index_col=0)
             df3=pd.read_excel(files_path[2],index_col=0)
@@ -268,8 +271,9 @@ def DGE(state:Annotated[dict,InjectedState],comparison_name:str)->str:
                 g.cax.set_title('log2Normlised_Counts', fontsize=10) # Label the colorbar
                 plt.savefig(files_path[0]+'_plot.png', dpi=300, bbox_inches='tight')
                 return {"message":"your DGE or Differential gene expression and heatmap file is ready; please download. Note: this DGE is strictly based on pvalue<0.05 and log2FC +/-1"}
-        #except:
-         #   return {"message":"given data is not in correct format; Please download the template using download button"}
+        except:
+            shutil.copy("static/DGE.zip",files_path[0]+"_Template.zip")
+            return {"message":"given data is not in correct format; Please download the template using download button"}
     else:
         return {"message":"probably you forgot to attach file"}
 
